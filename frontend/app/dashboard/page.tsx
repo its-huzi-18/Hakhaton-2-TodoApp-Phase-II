@@ -1,8 +1,8 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { useAuth } from "@/lib/auth";
-import { useTasks } from "@/lib/tasks";
+import { useAuth } from "@/hooks/auth";
+import { useTasks } from "@/hooks/tasks";
 import { useRouter } from "next/navigation";
 
 

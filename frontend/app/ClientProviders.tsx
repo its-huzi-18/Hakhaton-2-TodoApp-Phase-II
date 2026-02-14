@@ -1,7 +1,7 @@
 'use client';
 
-import { AuthProvider } from '@/lib/auth';
-import { TasksProvider } from '@/lib/tasks';
+import { AuthProvider } from '@/hooks/auth';
+import { TasksProvider } from '@/hooks/tasks';
 import { ReactNode } from 'react';
 
 export default function ClientProviders({ children }: { children: ReactNode }) {
