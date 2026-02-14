@@ -1,8 +1,16 @@
 import { NextRequest } from 'next/server';
 
-// Simple in-memory storage for demo purposes
+// Global in-memory storage for demo purposes
 // In a real application, you would use a database
-const tasksStorage: Map<string, any> = new Map();
+declare global {
+  var __tasks_storage__: Map<string, any>;
+}
+
+if (!global.__tasks_storage__) {
+  global.__tasks_storage__ = new Map();
+}
+
+const tasksStorage = global.__tasks_storage__;
 
 export async function GET(request: NextRequest) {
   try {
