@@ -48,7 +48,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     setError(null);
 
     try {
-      // Simulate API call to login endpoint
+      // API call to login endpoint
       const response = await fetch('/api/auth/login', {
         method: 'POST',
         headers: {
@@ -82,7 +82,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     setError(null);
 
     try {
-      // Simulate API call to register endpoint
+      // API call to register endpoint
       const response = await fetch('/api/auth/register', {
         method: 'POST',
         headers: {
