@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import Link from "next/link";
-import { useAuth } from "@/src/lib/auth";
+import { useAuth } from "@/lib/auth";
 import { useRouter } from "next/navigation";
 import Navbar from "@/app/components/Navbar";
 
