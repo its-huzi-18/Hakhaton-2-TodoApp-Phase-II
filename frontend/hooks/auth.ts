@@ -1,7 +1,5 @@
-'use client';
-
 import React, { createContext, useContext, useState, useEffect, ReactNode } from 'react';
-import { redirect } from 'next/navigation';
+import { useRouter } from 'next/navigation';
 
 // Define types
 interface User {
@@ -29,6 +27,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   const [user, setUser] = useState<User | null>(null);
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [error, setError] = useState<string | null>(null);
+  const router = useRouter(); // Initialize router
 
   // Check if user is authenticated on mount
   useEffect(() => {
@@ -68,7 +67,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       localStorage.setItem('user', JSON.stringify(data.user));
       
       setUser(data.user);
-      redirect('/dashboard');
+      router.push('/dashboard');
     } catch (err: any) {
       setError(err.message || 'Login failed');
       throw err;
@@ -102,7 +101,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       localStorage.setItem('user', JSON.stringify(data.user));
       
       setUser(data.user);
-      redirect('/dashboard');
+      router.push('/dashboard');
     } catch (err: any) {
       setError(err.message || 'Registration failed');
       throw err;
@@ -117,7 +116,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     localStorage.removeItem('user');
     
     setUser(null);
-    redirect('/');
+    router.push('/');
   };
 
   const clearError = () => {
