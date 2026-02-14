@@ -29,7 +29,7 @@ export default function DashboardPage() {
       return;
     }
     fetchTasks();
-  }, [isAuthenticated, fetchTasks, router]);
+  }, [isAuthenticated]); // Removed fetchTasks and router from dependencies to prevent infinite loop
 
   const handleCreateTask = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -44,8 +44,7 @@ export default function DashboardPage() {
       });
       setNewTaskTitle("");
       setNewTaskDescription("");
-      // Refresh tasks to ensure UI is up to date
-      await fetchTasks();
+      // The context state should update automatically, no need to fetch again
     } catch (error) {
       // Error is handled by the context
     } finally {
