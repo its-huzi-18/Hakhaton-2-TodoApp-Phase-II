@@ -54,6 +54,9 @@ export async function PUT(
     // Save back to storage
     tasksStorage.set(taskId, updatedTask);
 
+    // Log for debugging
+    console.log(`Updated task with ID: ${taskId}`);
+
     return Response.json(updatedTask);
   } catch (error) {
     console.error('Update task error:', error);
@@ -91,6 +94,9 @@ export async function DELETE(
 
     // Remove the task
     tasksStorage.delete(taskId);
+
+    // Log for debugging
+    console.log(`Deleted task with ID: ${taskId}. Remaining tasks: ${tasksStorage.size}`);
 
     return Response.json({ message: 'Task deleted successfully' });
   } catch (error) {

@@ -36,14 +36,21 @@ export default function DashboardPage() {
     if (!newTaskTitle.trim()) return;
 
     setIsCreating(true);
-    await createTask({
-      title: newTaskTitle.trim(),
-      description: newTaskDescription.trim() || undefined,
-      is_completed: false,
-    });
-    setNewTaskTitle("");
-    setNewTaskDescription("");
-    setIsCreating(false);
+    try {
+      await createTask({
+        title: newTaskTitle.trim(),
+        description: newTaskDescription.trim() || undefined,
+        is_completed: false,
+      });
+      setNewTaskTitle("");
+      setNewTaskDescription("");
+      // Refresh tasks to ensure UI is up to date
+      await fetchTasks();
+    } catch (error) {
+      // Error is handled by the context
+    } finally {
+      setIsCreating(false);
+    }
   };
 
   if (!isAuthenticated) {

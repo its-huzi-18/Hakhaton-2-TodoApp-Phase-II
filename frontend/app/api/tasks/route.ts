@@ -16,7 +16,7 @@ export async function GET(request: NextRequest) {
   try {
     // Get the token from headers to verify authentication
     const authHeader = request.headers.get('authorization');
-    
+
     if (!authHeader || !authHeader.startsWith('Bearer ')) {
       return Response.json(
         { error: 'Unauthorized' },
@@ -26,6 +26,9 @@ export async function GET(request: NextRequest) {
 
     // Convert Map to array for response
     const tasksArray = Array.from(tasksStorage.values());
+
+    // Log for debugging
+    console.log(`Returning ${tasksArray.length} tasks`);
 
     return Response.json({ tasks: tasksArray });
   } catch (error) {
@@ -41,7 +44,7 @@ export async function POST(request: NextRequest) {
   try {
     // Get the token from headers to verify authentication
     const authHeader = request.headers.get('authorization');
-    
+
     if (!authHeader || !authHeader.startsWith('Bearer ')) {
       return Response.json(
         { error: 'Unauthorized' },
@@ -73,6 +76,9 @@ export async function POST(request: NextRequest) {
 
     // Add to in-memory storage
     tasksStorage.set(newTask.id, newTask);
+
+    // Log for debugging
+    console.log(`Created task with ID: ${newTask.id}. Total tasks: ${tasksStorage.size}`);
 
     return Response.json(newTask, { status: 201 });
   } catch (error) {
