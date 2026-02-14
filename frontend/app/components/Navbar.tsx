@@ -26,21 +26,15 @@ export default function Navbar() {
   }
 
   return (
-    <nav className="relative bg-gradient-to-br from-slate-950 via-slate-900 to-indigo-950 shadow-lg z-50">
-      {/* Glow behind navbar */}
-      <div className="absolute inset-0 pointer-events-none">
-        <div className="absolute top-[-80px] right-[-80px] w-64 h-64 bg-indigo-600/20 rounded-full blur-3xl"></div>
-        <div className="absolute bottom-[-80px] left-[-80px] w-64 h-64 bg-sky-500/10 rounded-full blur-3xl"></div>
-      </div>
-
-      <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <nav className="sticky top-0 z-50 bg-white/80 dark:bg-slate-900/80 backdrop-blur-md border-b border-gray-200 dark:border-slate-700 shadow-sm">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-16">
           {/* Logo */}
           <div className="flex items-center">
-            <Link href="/" className="flex items-center space-x-2">
-              <div className="w-8 h-8 bg-white/20 backdrop-blur-sm rounded-lg flex items-center justify-center">
+            <Link href="/" className="flex items-center space-x-2 group">
+              <div className="w-10 h-10 rounded-lg bg-gradient-to-r from-blue-500 to-purple-600 flex items-center justify-center group-hover:scale-105 transition-transform">
                 <svg
-                  className="w-5 h-5 text-sky-400"
+                  className="w-6 h-6 text-white"
                   fill="none"
                   stroke="currentColor"
                   viewBox="0 0 24 24"
@@ -53,32 +47,34 @@ export default function Navbar() {
                   />
                 </svg>
               </div>
-              <span className="text-white font-bold text-xl">TodoApp</span>
+              <span className="text-xl font-bold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
+                TaskFlow
+              </span>
             </Link>
           </div>
 
           {/* Desktop nav links */}
-          <div className="hidden md:flex items-center space-x-4">
+          <div className="hidden md:flex items-center space-x-1">
             <Link
-              href="/components/features"
-              className="text-white hover:bg-white/10 px-3 py-2 rounded-md text-sm font-medium transition-colors"
+              href="/"
+              className="text-gray-700 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 px-4 py-2 rounded-lg transition-colors font-medium"
             >
-              Features
+              Home
             </Link>
             {isAuthenticated ? (
               <>
-                <span className="text-slate-300 text-sm">
-                  Welcome, {user?.email}
-                </span>
                 <Link
                   href="/dashboard"
-                  className="text-white hover:bg-white/10 px-3 py-2 rounded-md text-sm font-medium transition-colors"
+                  className="text-gray-700 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 px-4 py-2 rounded-lg transition-colors font-medium"
                 >
                   Dashboard
                 </Link>
+                <div className="ml-4 px-4 py-2 text-sm text-gray-600 dark:text-gray-400 bg-gray-100 dark:bg-slate-800 rounded-lg">
+                  <span className="hidden sm:inline">Welcome,</span> {user?.email}
+                </div>
                 <button
                   onClick={handleLogout}
-                  className="text-white hover:bg-white/10 px-3 py-2 rounded-md text-sm font-medium transition-colors"
+                  className="ml-2 bg-gradient-to-r from-red-500 to-orange-500 hover:from-red-600 hover:to-orange-600 text-white px-4 py-2 rounded-lg font-medium transition-all shadow-md hover:shadow-lg transform hover:-translate-y-0.5 btn-transition"
                 >
                   Logout
                 </button>
@@ -87,13 +83,13 @@ export default function Navbar() {
               <>
                 <Link
                   href="/auth/login"
-                  className="text-white hover:bg-white/10 px-3 py-2 rounded-md text-sm font-medium transition-colors"
+                  className="text-gray-700 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 px-4 py-2 rounded-lg transition-colors font-medium"
                 >
                   Login
                 </Link>
                 <Link
                   href="/auth/signup"
-                  className="bg-gradient-to-r from-sky-500 to-indigo-600 px-4 py-2 rounded-md text-sm font-medium text-white shadow-md hover:opacity-90 transition"
+                  className="bg-gradient-to-r from-blue-500 to-purple-600 hover:from-blue-600 hover:to-purple-700 text-white px-4 py-2 rounded-lg font-medium transition-all shadow-md hover:shadow-lg transform hover:-translate-y-0.5 btn-transition"
                 >
                   Sign Up
                 </Link>
@@ -102,54 +98,63 @@ export default function Navbar() {
           </div>
 
           {/* Mobile menu button */}
-          <div className="md:hidden">
+          <div className="md:hidden flex items-center">
             <button
               type="button"
               onClick={() => setMobileOpen(!mobileOpen)}
-              className="text-white hover:bg-white/10 p-2 rounded-md transition-colors"
+              className="text-gray-700 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 p-2 rounded-md transition-colors"
+              aria-expanded="false"
+              aria-controls="mobile-menu"
             >
+              <span className="sr-only">Open main menu</span>
               <svg
                 className="h-6 w-6"
+                xmlns="http://www.w3.org/2000/svg"
                 fill="none"
-                stroke="currentColor"
                 viewBox="0 0 24 24"
+                stroke="currentColor"
+                aria-hidden="true"
               >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth={2}
-                  d={mobileOpen ? "M6 18L18 6M6 6l12 12" : "M4 6h16M4 12h16M4 18h16"}
-                />
+                {mobileOpen ? (
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                ) : (
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
+                )}
               </svg>
             </button>
           </div>
         </div>
+      </div>
 
-        {/* Mobile menu */}
-        {mobileOpen && (
-          <div className="md:hidden mt-2 space-y-2 bg-white/5 backdrop-blur-lg rounded-xl p-4 shadow-lg">
+      {/* Mobile menu */}
+      {mobileOpen && (
+        <div className="md:hidden" id="mobile-menu">
+          <div className="px-2 pt-2 pb-3 space-y-1 sm:px-3 bg-white dark:bg-slate-800 shadow-lg rounded-b-lg border-t border-gray-200 dark:border-slate-700">
             <Link
-              href="/components/features"
-              className="block text-white px-3 py-2 rounded-md text-sm font-medium hover:bg-white/10 transition-colors"
+              href="/"
+              className="block px-3 py-2 rounded-md text-base font-medium text-gray-700 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 hover:bg-gray-50 dark:hover:bg-slate-700"
               onClick={() => setMobileOpen(false)}
             >
-              Features
+              Home
             </Link>
             {isAuthenticated ? (
               <>
                 <Link
                   href="/dashboard"
-                  className="block text-white px-3 py-2 rounded-md text-sm font-medium hover:bg-white/10 transition-colors"
+                  className="block px-3 py-2 rounded-md text-base font-medium text-gray-700 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 hover:bg-gray-50 dark:hover:bg-slate-700"
                   onClick={() => setMobileOpen(false)}
                 >
                   Dashboard
                 </Link>
+                <div className="px-3 py-2 text-sm text-gray-600 dark:text-gray-400 bg-gray-100 dark:bg-slate-700 rounded-lg mx-3">
+                  Welcome, {user?.email}
+                </div>
                 <button
                   onClick={() => {
                     handleLogout();
                     setMobileOpen(false);
                   }}
-                  className="block w-full text-white px-3 py-2 rounded-md text-sm font-medium hover:bg-white/10 transition-colors"
+                  className="w-full text-left px-3 py-2 rounded-md text-base font-medium text-white bg-gradient-to-r from-red-500 to-orange-500 hover:from-red-600 hover:to-orange-600"
                 >
                   Logout
                 </button>
@@ -158,14 +163,14 @@ export default function Navbar() {
               <>
                 <Link
                   href="/auth/login"
-                  className="block text-white px-3 py-2 rounded-md text-sm font-medium hover:bg-white/10 transition-colors"
+                  className="block px-3 py-2 rounded-md text-base font-medium text-gray-700 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 hover:bg-gray-50 dark:hover:bg-slate-700"
                   onClick={() => setMobileOpen(false)}
                 >
                   Login
                 </Link>
                 <Link
                   href="/auth/signup"
-                  className="block bg-gradient-to-r from-sky-500 to-indigo-600 px-3 py-2 rounded-md text-sm font-medium text-white shadow-md hover:opacity-90 transition"
+                  className="block px-3 py-2 rounded-md text-base font-medium text-white bg-gradient-to-r from-blue-500 to-purple-600 hover:from-blue-600 hover:to-purple-700"
                   onClick={() => setMobileOpen(false)}
                 >
                   Sign Up
@@ -173,8 +178,8 @@ export default function Navbar() {
               </>
             )}
           </div>
-        )}
-      </div>
+        </div>
+      )}
     </nav>
   );
 }
